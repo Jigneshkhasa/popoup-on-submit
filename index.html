@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Pop up</title>
+</head>
+
+<body>
+    <h1>Wait for 5 seconds!</h1>
+
+    <div class="newsletter-overlay">
+
+        <div id="newsletter-popup">
+            <a href="#" class="popup-close">X</a>
+            <div class="newsletter-in">
+                <h3>FILLUP THE VALID MAIL</h3>
+                <form target="_blank" class="validate" method="post" action="#">
+                    <div class="frm-row">
+                        <input class="frm-email" type="text" placeholder="YOUR EMAIL" name="EMAIL" required="">
+                    </div>
+                    <div class="frm-submit">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script>
+        var delay = 5000;
+        jQuery(document).ready(function ($) {
+            setTimeout(function () { showNewsletterPopup(); }, delay);
+            $('.popup-close').click(function () {
+                $('.newsletter-overlay').hide();
+                setCookie('newsletter-popup', 'popped', 30);
+            });
+        });
+
+        function showNewsletterPopup() {
+            if (getCookie('newsletter-popup') == "") {
+                $('.newsletter-overlay').show();
+                setCookie('newsletter-popup', 'popped', 30);
+            }
+            else {
+                console.log("Newsletter popup blocked.");
+            }
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+        }
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = jQuery.trim(ca[i]);
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+    </script>
+</body>
+
+</html>
